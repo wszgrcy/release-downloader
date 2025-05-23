@@ -299,7 +299,12 @@ export class ReleaseDownloader {
     }
 
     core.info(`Downloading file: ${asset.fileName} to: ${outputPath}`)
+    console.log('准备下载', asset)
+    console.log('outputPath', outputPath)
+
     const response = await this.httpClient.get(asset.url, headers)
+    console.log('下载后?')
+    console.log(response)
 
     if (response.message.statusCode === 200) {
       return this.saveFile(outputPath, asset.fileName, response)
