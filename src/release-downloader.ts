@@ -73,16 +73,22 @@ export class ReleaseDownloader {
     preRelease: boolean
   ): Promise<GithubRelease> {
     core.info(`Fetching latest release for repo ${repoPath}`)
+    console.log('准备请求', repoPath, preRelease)
+    console.log('准备请求2', this.apiRoot)
 
     const headers: IHeaders = { Accept: 'application/vnd.github.v3+json' }
     let response: IHttpClientResponse
 
     if (!preRelease) {
+      console.log('1111')
+
       response = await this.httpClient.get(
         `${this.apiRoot}/repos/${repoPath}/releases/latest`,
         headers
       )
     } else {
+      console.log('2222')
+
       response = await this.httpClient.get(
         `${this.apiRoot}/repos/${repoPath}/releases`,
         headers
@@ -90,6 +96,8 @@ export class ReleaseDownloader {
     }
 
     if (response.message.statusCode !== 200) {
+      console.log(response)
+
       const err: Error = new Error(
         `[getlatestRelease] Unexpected response: ${response.message.statusCode}`
       )
