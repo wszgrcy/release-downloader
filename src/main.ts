@@ -22,7 +22,7 @@ async function run(): Promise<void> {
 
     const downloader = new ReleaseDownloader(httpClient, githubApiUrl)
     try {
-      console.log('设置')
+      console.log('设置', downloadSettings)
 
       const res: string[] = await downloader.download(downloadSettings)
 
