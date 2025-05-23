@@ -21,16 +21,23 @@ async function run(): Promise<void> {
     ])
 
     const downloader = new ReleaseDownloader(httpClient, githubApiUrl)
+    try {
+      console.log('设置')
 
-    const res: string[] = await downloader.download(downloadSettings)
+      const res: string[] = await downloader.download(downloadSettings)
 
-    if (downloadSettings.extractAssets) {
-      for (const asset of res) {
-        await extract(asset, downloadSettings.outFilePath)
+      if (downloadSettings.extractAssets) {
+        for (const asset of res) {
+          await extract(asset, downloadSettings.outFilePath)
+        }
       }
+      core.info(`Done: ${res}`)
+      core.setOutput('exist', true)
+    } catch (error) {
+      console.log('异常')
+      console.log(error)
+      core.setOutput('exist', false)
     }
-
-    core.info(`Done: ${res}`)
   } catch (error) {
     if (error instanceof Error) {
       core.setFailed(error.message)
