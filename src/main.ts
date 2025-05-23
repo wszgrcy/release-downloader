@@ -33,7 +33,7 @@ async function run(): Promise<void> {
       core.setOutput('exist', true)
     } catch (error) {
       core.setOutput('exist', false)
-      throw error
+      // throw error
     }
   } catch (error) {
     if (error instanceof Error) {
