@@ -21,16 +21,20 @@ async function run(): Promise<void> {
     ])
 
     const downloader = new ReleaseDownloader(httpClient, githubApiUrl)
+    try {
+      const res: string[] = await downloader.download(downloadSettings)
 
-    const res: string[] = await downloader.download(downloadSettings)
-
-    if (downloadSettings.extractAssets) {
-      for (const asset of res) {
-        await extract(asset, downloadSettings.outFilePath)
+      if (downloadSettings.extractAssets) {
+        for (const asset of res) {
+          await extract(asset, downloadSettings.outFilePath)
+        }
       }
+      core.info(`Done: ${res}`)
+      core.setOutput('exist', true)
+    } catch (error) {
+      core.setOutput('exist', false)
+      throw error
     }
-
-    core.info(`Done: ${res}`)
   } catch (error) {
     if (error instanceof Error) {
       core.setFailed(error.message)
