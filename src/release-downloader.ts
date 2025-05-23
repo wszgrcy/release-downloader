@@ -136,6 +136,8 @@ export class ReleaseDownloader {
     repoPath: string,
     tag: string
   ): Promise<GithubRelease> {
+    console.log('这里111')
+
     core.info(`Fetching release ${tag} from repo ${repoPath}`)
 
     if (tag === '') {
@@ -143,6 +145,10 @@ export class ReleaseDownloader {
     }
 
     const headers: IHeaders = { Accept: 'application/vnd.github.v3+json' }
+    console.log(this.apiRoot)
+    console.log(repoPath)
+    console.log(tag)
+    console.log(headers)
 
     const response = await this.httpClient.get(
       `${this.apiRoot}/repos/${repoPath}/releases/tags/${tag}`,
@@ -150,6 +156,9 @@ export class ReleaseDownloader {
     )
 
     if (response.message.statusCode !== 200) {
+      console.log('异常')
+      console.log(response)
+
       const err: Error = new Error(
         `[getReleaseByTag] Unexpected response: ${response.message.statusCode}`
       )
