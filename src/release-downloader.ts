@@ -225,7 +225,7 @@ export class ReleaseDownloader {
 
           const dData: DownloadMetaData = {
             fileName: asset.name,
-            url: asset['url'],
+            url: asset['url']??(asset as any)['browser_download_url'],
             isTarBallOrZipBall: false
           }
           downloads.push(dData)
