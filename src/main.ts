@@ -34,6 +34,7 @@ async function run(): Promise<void> {
     } catch (error) {
       core.setOutput('exist', false)
       // throw error
+      console.log(error)
     }
   } catch (error) {
     if (error instanceof Error) {
