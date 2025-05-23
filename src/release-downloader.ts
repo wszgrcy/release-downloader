@@ -45,6 +45,7 @@ export class ReleaseDownloader {
         'Config error: Please input a valid tag or release ID, or specify `latest`'
       )
     }
+    console.log('返回列表?', ghRelease)
 
     const resolvedAssets: DownloadMetaData[] = this.resolveAssets(
       ghRelease,
